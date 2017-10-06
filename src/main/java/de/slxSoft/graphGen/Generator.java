@@ -5,7 +5,7 @@ package de.slxSoft.graphGen;
  */
 public class Generator {
 
-    Graph graph;
+    private Graph graph;
 
     public Generator() {
         graph = new Graph();
@@ -13,6 +13,10 @@ public class Generator {
 
     public int[] generate(){
         return graph.generate();
+    }
+
+    public Graph getGraph(){
+        return graph;
     }
 
 }

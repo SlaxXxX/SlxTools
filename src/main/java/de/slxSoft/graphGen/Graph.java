@@ -8,14 +8,14 @@ import net.objecthunter.exp4j.ExpressionBuilder;
  */
 public class Graph {
 
-    double maxOffset = 0.4;
-    int changeSpeed = 1;
-    int size = 100;
-    int changeCooldown = 1;
-    int cooldownSpeed = 1;
+    private double maxOffset = 0.4;
+    private int changeSpeed = 1;
+    private int size = 100;
+    private int changeCooldown = 1;
+    private int cooldownSpeed = 10;
 
-    String function = "50+3.5*x";
-    int[] values;
+    private String function = "50+3.5*x";
+    private int[] values;
 
     public void setMaxOffset(int offset) {
         maxOffset = offset;
@@ -65,7 +65,7 @@ public class Graph {
 
         int newval = lastval + (int) Math.round(maxDist * distortion / changeCooldown);
 
-        changeCooldown += Math.abs(distortion) * 10 / changeCooldown;
+        changeCooldown += Math.abs(distortion) * 100 / changeCooldown;
         changeCooldown = Math.max(1, changeCooldown - cooldownSpeed);
 
         return newval;
