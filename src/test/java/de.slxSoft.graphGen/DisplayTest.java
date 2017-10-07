@@ -8,14 +8,16 @@ import java.util.*;
  * Created by SlaxX on 06.10.2017.
  */
 public class DisplayTest {
-    static java.util.List<int[]> values;
-    static final int GRAPHS = 5;
+    static java.util.List<int[][]> values;
+    static final int GRAPHS = 10;
+    static final int STACKS = 100;
 
     public static void main(String[] args) {
         values = new ArrayList<>();
 
         Generator generator = new Generator();
-        for (int i=0;i<GRAPHS;i++)
+        generator.addGraph(GRAPHS - 1);
+        for (int i = 0; i < STACKS; i++)
             values.add(generator.generate());
 
         JPanel panel = new JPanel();
@@ -37,17 +39,21 @@ public class DisplayTest {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            for(int[] value : values) {
-                int index = values.indexOf(value);
-                g.setColor(new Color(index * (255 / values.size()),index * (255 / values.size()),255 - index * (255 / values.size())));
-                for (int i = 0; i < value.length - 1; i++)
-                    g.drawLine(i * 10, 250 + (index * 550 / values.size() ) - value[i] / 2, (i + 1) * 10, 250 + (index * 550 / values.size() ) - value[(i + 1)] / 2);
+            for (int[][] value : values) {
+                for (int j = 0; j < value.length; j++) {
+                    g.setColor(new Color(j * (255 / value.length), j * (255 / value.length), 255 - j * (255 / value.length)));
+                    for (int i = 0; i < value[j].length - 1; i++) {
+                        g.drawLine(i * 10, 250 + (j * 600 / value.length) - value[j][i] / 2, (i + 1) * 10, 250 + (j * 600 / value.length) - value[j][i + 1] / 2);
+                        g.drawOval(i * 10 - 1, 250 + (j * 600 / value.length) - value[j][i] / 2 - 1, 2, 2);
+                        g.drawOval((i + 1) * 10 - 1, 250 + (j * 600 / value.length) - value[j][i + 1] / 2 - 1, 2, 2);
+                    }
+                }
             }
         }
 
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(1000, 800); // As suggested by camickr
+            return new Dimension(1000, 800);
         }
     }
 }
