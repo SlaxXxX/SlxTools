@@ -31,6 +31,14 @@ public class Generator {
 
         graphs.put(seeder.nextLong(), new Graph());
     }
+    
+    /**
+     * Returns the Generators seed<br>
+     * @return The seed
+     */
+    public long getSeed() {
+    	return seed;
+    }
 
     /**
      * adds another Graph to the Generator
@@ -57,12 +65,12 @@ public class Generator {
      * use this generate() method to generate all Graphs in a two-dimensional array<br>
      * As of now, you may also use the generate() method directly from the Graph<br>
      */
-    public int[][] generate() {
-        List<int[]> list = new ArrayList<>();
+    public double[][] generate() {
+        List<double[]> list = new ArrayList<>();
         for (Map.Entry<Long, Graph> entry : graphs.entrySet()) {
             list.add(entry.getValue().generate(entry.getKey() % seed));
         }
-        return list.toArray(new int[0][0]);
+        return list.toArray(new double[0][0]);
     }
 
     /**

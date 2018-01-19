@@ -7,18 +7,21 @@ import java.util.*;
 /**
  * Created by SlaxX on 06.10.2017.
  */
-public class DisplayTest {
-    static java.util.List<int[][]> values;
-    static final int GRAPHS = 10;
-    static final int STACKS = 100;
+public class MarnsTest {
+    static java.util.List<double[][]> values;
 
     public static void main(String[] args) {
         values = new ArrayList<>();
 
         Generator generator = new Generator();
-        generator.addGraph(GRAPHS - 1);
-        for (int i = 0; i < STACKS; i++)
-            values.add(generator.generate());
+        generator.addGraph();
+        Graph variance = generator.getGraph(1);
+        variance.setFunction("1");
+        variance.setMaxOffset(0.2);
+        variance.setSubdecimals(2);
+        variance.setCooldownSpeed(99999999);
+        
+        values.add(generator.generate());
 
         JPanel panel = new JPanel();
         panel.setSize(1000, 800);
@@ -39,13 +42,14 @@ public class DisplayTest {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            for (int[][] value : values) {
+            for (double[][] value : values) {
                 for (int j = 0; j < value.length; j++) {
                     g.setColor(new Color(j * (255 / value.length), j * (255 / value.length), 255 - j * (255 / value.length)));
                     for (int i = 0; i < value[j].length - 1; i++) {
-                        g.drawLine(i * 10, 250 + (j * 600 / value.length) - value[j][i] / 2, (i + 1) * 10, 250 + (j * 600 / value.length) - value[j][i + 1] / 2);
-                        g.drawOval(i * 10 - 1, 250 + (j * 600 / value.length) - value[j][i] / 2 - 1, 2, 2);
-                        g.drawOval((i + 1) * 10 - 1, 250 + (j * 600 / value.length) - value[j][i + 1] / 2 - 1, 2, 2);
+                        g.drawLine(i * 10, 250 + (j * 600 / value.length) - (int)(value[j][i] / 2), (i + 1) * 10, 250 + (j * 600 / value.length) - (int)value[j][i + 1] / 2);
+                        g.drawOval(i * 10 - 1, 250 + (j * 600 / value.length) - (int)value[j][i] / 2 - 1, 2, 2);
+                        g.drawOval((i + 1) * 10 - 1, 250 + (j * 600 / value.length) - (int)value[j][i + 1] / 2 - 1, 2, 2);
+                        System.out.println(value[j][i + 1]);
                     }
                 }
             }
