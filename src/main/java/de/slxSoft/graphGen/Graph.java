@@ -3,7 +3,6 @@ package de.slxSoft.graphGen;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -11,163 +10,189 @@ import java.util.Random;
  */
 public class Graph {
 
-	private double maxOffset = 0.4;
-	private int changeSpeed = 1;
-	private int size = 100;
-	private int changeCooldown = 1;
-	private int cooldownSpeed = 20;
-	private int subdecimals = 0;
+    private boolean relativeToLast = true;
+    private double maxOffset = 0.4;
+    private int changeProbability = 1;
+    private int size = 100;
+    private int changeCooldown = 1;
+    private int cooldownSpeed = 20;
+    private int subdecimals = 0;
 
-	private String function = "50+3.5*x";
-	private double[] values;
 
-	/**
-	 * DEFAULT is 0.4 (40%)<br>
-	 * <br>
-	 *
-	 * @param offset
-	 *            Maximum offset from the Function in percent
-	 */
-	public void setMaxOffset(double offset) {
-		maxOffset = offset;
-	}
+    private String function = "50+3.5*x";
+    private double[] values;
 
-	/**
-	 * DEFAULT is 100<br>
-	 * <br>
-	 *
-	 * @param size
-	 *            Size of the Array<br>
-	 *            <br>
-	 *
-	 *            Always starts at 0 and includes the maximum value (therefore
-	 *            contains size+1 values)
-	 */
-	public void setSize(int size) {
-		this.size = size;
-	}
+    boolean getRelativeToLast(){return relativeToLast;}
+    double getMaxOffset(){return maxOffset;}
+    int getChangeProbability() {
+        return changeProbability;
+    }
+    int getSize() {
+        return size;
+    }
+    int getChangeCooldown() {
+        return changeCooldown;
+    }
+    int getSubdecimals() {
+        return subdecimals;
+    }
+    String getFunction() {
+        return function;
+    }
 
-	/**
-	 * DEFAULT is "50 + 3.5 * x" --> with default size a function that ranges
-	 * from 50 - 400<br>
-	 * <br>
-	 *
-	 * @param function
-	 *            A String that contains the Function that the Graph will
-	 *            determine values after<br>
-	 *            <br>
-	 *
-	 *
-	 *            "x" is a predefined variable, other variables are not
-	 *            allowed<br>
-	 *            for more info on what constants and operators are usable,
-	 *            visit {@http://www.objecthunter.net/exp4j}
-	 */
-	public void setFunction(String function) {
-		this.function = function;
-	}
+    /**
+     * DEFAULT is true<br><br>
+     * <p>
+     * If it is set to true, each value will be generated
+     * based on the last value.
+     * If it is set to false, it will always be the functions value.
+     *
+     * @param relative The boolean
+     */
+    public void setRelativeToLast(boolean relative) {
+        relativeToLast = relative;
+    }
 
-	/**
-	 * DEFAULT is 0<br>
-	 * <br>
-	 *
-	 * @param speed
-	 *            ChangeSpeed defines the chance for the curve to change it's
-	 *            value<br>
-	 *            <br>
-	 *
-	 *            the higher the value, the less the curve will have "noise"<br>
-	 *            (but 0 seems to be the best..)
-	 */
-	public void setChangeSpeed(int speed) {
-		changeSpeed = speed * 2 + 1;
-	}
+    /**
+     * DEFAULT is 0.4 (40%)<br>
+     * <br>
+     *
+     * @param offset Maximum offset from the Function in percent
+     */
+    public void setMaxOffset(double offset) {
+        maxOffset = offset;
+    }
 
-	/**
-	 * DEFAULT is 20<br>
-	 * <br>
-	 *
-	 * To further reduce noise, the curve will be on a "cooldown" after a big
-	 * value change<br>
-	 * <br>
-	 *
-	 * @param speed
-	 *            CooldownSpeed sets the speed of the cooldown regeneration<br>
-	 *            the lower the value, the slower the cooldown will regenerate
-	 */
-	public void setCooldownSpeed(int speed) {
-		cooldownSpeed = speed;
-	}
-	
-	/**
-	 * Sets the amount of subdecimals the values get rounded to.
-	 * @param decimals
-	 */
-	public void setSubdecimals(int decimals) {
-		subdecimals = decimals;
-	}
+    /**
+     * DEFAULT is 100<br>
+     * <br>
+     *
+     * @param size Size of the Array<br>
+     *             <br>
+     *             <p>
+     *             Always starts at 0 and includes the maximum value (therefore
+     *             contains size+1 values)
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
 
-	/**
-	 *
-	 * @return Returns the Array of generated Values<br>
-	 *         <br>
-	 *
-	 *         If Generator.generate() wasn't executed yet, this will be
-	 *         empty<br>
-	 *         Alternatively, Generator.generate() will return the same Array
-	 */
-	public double[] getGraphValues() {
-		return values;
-	}
+    /**
+     * DEFAULT is "50 + 3.5 * x" --> with default size a function that ranges
+     * from 50 - 400<br>
+     * <br>
+     *
+     * @param function A String that contains the Function that the Graph will
+     *                 determine values after<br>
+     *                 <br>
+     *                 <p>
+     *                 <p>
+     *                 "x" is a predefined variable, other variables are not
+     *                 allowed<br>
+     *                 for more info on what constants and operators are usable,
+     *                 visit {@http://www.objecthunter.net/exp4j}
+     */
+    public void setFunction(String function) {
+        this.function = function;
+    }
 
-	/**
-	 *
-	 * @return Returns the Array of generated Values<br>
-	 *         <br>
-	 *
-	 *         The Graph can also directly be generated<br>
-	 *         Use this Method to specifically generate the values for this
-	 *         Graph only
-	 */
-	public double[] generate(long seed) {
+    /**
+     * DEFAULT is 0<br>
+     * <br>
+     *
+     * @param probability ChangeProbability defines the chance for the distortion
+     *                    to get a high value<br>
+     *              <br>
+     *              <p>
+     *              the higher the value, the lower the chance will get, that you get a high distortion<br>
+     *              (but 0 seems to be the best..)
+     */
+    public void setChangeProbability(int probability) {
+        changeProbability = probability * 2 + 1;
+    }
 
-		Random random = new Random(seed);
-		values = new double[size + 1];
+    /**
+     * DEFAULT is 20<br>
+     * <br>
+     * <p>
+     * To further reduce noise, the curve will be on a "cooldown" after a big
+     * value change<br>
+     * <br>
+     *
+     * @param speed CooldownSpeed sets the speed of the cooldown regeneration<br>
+     *              the lower the value, the slower the cooldown will regenerate
+     */
+    public void setCooldownSpeed(int speed) {
+        cooldownSpeed = speed;
+    }
 
-		Expression expression = new ExpressionBuilder(function).variable("x").build();
+    /**
+     * Sets the amount of subdecimals the values get rounded to.
+     *
+     * @param decimals
+     */
+    public void setSubdecimals(int decimals) {
+        subdecimals = decimals;
+    }
 
-		changeCooldown = 1;
-		int format = 1;
-		for (int i = 0; i < subdecimals; i++)
-			format *= 10;
-		for (int i = 0; i <= size; i++) {
-			expression.setVariable("x", i);
-			values[i] = expression.evaluate();
+    /**
+     * @return Returns the Array of generated Values<br>
+     * <br>
+     * <p>
+     * If Generator.generate() wasn't executed yet, this will be
+     * empty<br>
+     * Alternatively, Generator.generate() will return the same Array
+     */
+    public double[] getGraphValues() {
+        return values;
+    }
 
-			values[i] = (double)Math.round(distort(values[i - Math.min(i, 1)], values[i], random.nextDouble()) * format) / format;
-			
+    /**
+     * @return Returns the Array of generated Values<br>
+     * <br>
+     * <p>
+     * The Graph can also directly be generated<br>
+     * Use this Method to specifically generate the values for this
+     * Graph only
+     */
+    public double[] generate(long seed) {
 
-		}
-		return values;
-	}
+        Random random = new Random(seed);
+        values = new double[size + 1];
 
-	private double distort(double lastval, double thisval, double random) {
+        Expression expression = new ExpressionBuilder(function).variable("x").build();
 
-		double maxDist = (thisval * maxOffset);
+        changeCooldown = 1;
+        int format = 1;
+        for (int i = 0; i < subdecimals; i++)
+            format *= 10;
+        for (int i = 0; i <= size; i++) {
+            expression.setVariable("x", i);
+            values[i] = expression.evaluate();
 
-		double distortion = Math.pow(
-				Math.min(
-						Math.max(
-								random * 2 - 1,
-								-1 - (lastval - thisval) / maxDist),
-						1 - (lastval - thisval) / maxDist),
-				changeSpeed);
+            values[i] = (double) Math.round(distort((relativeToLast ? values[i - Math.min(i, 1)] : values[i]), values[i], random.nextDouble()) * format) / format;
 
-		double newval = lastval + maxDist * distortion / changeCooldown;
 
-		changeCooldown += Math.abs(distortion) * 100 / changeCooldown;
-		changeCooldown = Math.max(1, changeCooldown - cooldownSpeed);
+        }
+        return values;
+    }
 
-		return newval;
-	}
+    private double distort(double lastval, double thisval, double random) {
+
+        double maxDist = (thisval * maxOffset);
+
+        double distortion =
+                Math.min(
+                        Math.max(
+                                Math.pow(random * 2 - 1, changeProbability),
+                                -1 - (lastval - thisval) / maxDist),
+                        1 - (lastval - thisval) / maxDist);
+
+        double newval = lastval + maxDist * distortion / changeCooldown;
+
+        changeCooldown += Math.abs(distortion) * 100 / changeCooldown;
+        changeCooldown = Math.max(1, changeCooldown - cooldownSpeed);
+
+        return newval;
+    }
 }

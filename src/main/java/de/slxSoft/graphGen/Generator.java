@@ -18,7 +18,6 @@ public class Generator {
      */
     public Generator() {
         seed = new Random().nextLong();
-        graphs.put(seeder.nextLong(), new Graph());
     }
 
     /**
@@ -28,32 +27,48 @@ public class Generator {
      */
     public Generator(long seed) {
         this.seed = seed;
-
-        graphs.put(seeder.nextLong(), new Graph());
     }
-    
+
     /**
-     * Returns the Generators seed<br>
+     * Returns the Generators seed and all the graphs settings<br>
+     *
      * @return The seed
      */
-    public long getSeed() {
-    	return seed;
+    public String getSettings() {
+        StringBuilder settings = new StringBuilder();
+        settings.append("G" + graphs.size());
+        graphs.values().forEach(graph ->
+                settings.append("F" + graph.getFunction())
+                        .append("C" + graph.getChangeCooldown())
+                        .append("P" + graph.getChangeProbability())
+                        .append("D" + graph.getSubdecimals())
+                        .append("O" + graph.getMaxOffset())
+                        .append("R" + graph.getRelativeToLast())
+                        .append("S" + graph.getSize()));
+        settings.append("SEED"+seed);
+        return settings.toString();
     }
 
     /**
      * adds another Graph to the Generator
      */
-    public void addGraph() {
-        graphs.put(seeder.nextLong(), new Graph());
+    public Graph addGraph() {
+        Graph graph = new Graph();
+        graphs.put(seeder.nextLong(), graph);
+        return graph;
     }
 
     /**
      * adds specified amount of Graphs to the Generator
      */
-    public void addGraph(int i) {
+    public Graph[] addGraphs(int i) {
+        Graph[] graphs = new Graph[i];
         for (i += 0; i > 0; i--) {
-            graphs.put(seeder.nextLong(), new Graph());
+            Graph graph = new Graph();
+            this.graphs.put(seeder.nextLong(), graph);
+            graphs[i - 1] = graph;
         }
+        return graphs;
     }
 
 
