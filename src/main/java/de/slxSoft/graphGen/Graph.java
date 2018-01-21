@@ -12,7 +12,7 @@ public class Graph {
 
     private boolean relativeToLast = true;
     private double maxOffset = 0.4;
-    private int changeProbability = 1;
+    private int changeProbability = 0;
     private int size = 100;
     private int changeCooldown = 1;
     private int cooldownSpeed = 20;
@@ -22,20 +22,30 @@ public class Graph {
     private String function = "50+3.5*x";
     private double[] values;
 
-    boolean getRelativeToLast(){return relativeToLast;}
-    double getMaxOffset(){return maxOffset;}
+    boolean getRelativeToLast() {
+        return relativeToLast;
+    }
+
+    double getMaxOffset() {
+        return maxOffset;
+    }
+
     int getChangeProbability() {
         return changeProbability;
     }
+
     int getSize() {
         return size;
     }
-    int getChangeCooldown() {
-        return changeCooldown;
+
+    int getCooldownSpeed() {
+        return cooldownSpeed;
     }
+
     int getSubdecimals() {
         return subdecimals;
     }
+
     String getFunction() {
         return function;
     }
@@ -102,13 +112,13 @@ public class Graph {
      *
      * @param probability ChangeProbability defines the chance for the distortion
      *                    to get a high value<br>
-     *              <br>
-     *              <p>
-     *              the higher the value, the lower the chance will get, that you get a high distortion<br>
-     *              (but 0 seems to be the best..)
+     *                    <br>
+     *                    <p>
+     *                    the higher the value, the lower the chance will get, that you get a high distortion<br>
+     *                    (but 0 seems to be the best..)
      */
     public void setChangeProbability(int probability) {
-        changeProbability = probability * 2 + 1;
+        changeProbability = probability;
     }
 
     /**
@@ -184,7 +194,7 @@ public class Graph {
         double distortion =
                 Math.min(
                         Math.max(
-                                Math.pow(random * 2 - 1, changeProbability),
+                                Math.pow(random * 2 - 1, changeProbability * 2 - 1),
                                 -1 - (lastval - thisval) / maxDist),
                         1 - (lastval - thisval) / maxDist);
 

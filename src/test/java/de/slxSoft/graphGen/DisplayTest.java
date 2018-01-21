@@ -26,12 +26,12 @@ public class DisplayTest {
             graphs[i].setSubdecimals(3);
         }
 
-
+        System.out.println(generator.getSettings() + "\n\n");
         for (int i = 0; i < STACKS; i++) {
             values.add(generator.generate());
             for (int j = 0; j < values.get(values.size() - 1).length; j++) {
                 double[] doubles = values.get(values.size() - 1)[j];
-                for (int k=0;k<doubles.length;k++) {
+                for (int k = 0; k < doubles.length; k++) {
                     System.out.print(doubles[k] + ", ");
                 }
                 System.out.println();

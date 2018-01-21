@@ -1,6 +1,8 @@
 package de.slxSoft.graphGen;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Generates a random curve revolving around a predefined function and returns it as an integer array<br>
@@ -23,10 +25,26 @@ public class Generator {
     /**
      * Uses the seed to create an exact copy<br><br>
      *
-     * @param seed Seed to use for random generation
+     * @param settings The settings of the initial Generator
      */
-    public Generator(long seed) {
-        this.seed = seed;
+    public Generator(String settings) {
+        Matcher matcher = Pattern.compile("G(\\d+)(.+)SEED(-?\\d+)").matcher(settings);
+        matcher.matches();
+        seed = Long.parseLong(matcher.group(3));
+        this.addGraphs(Integer.parseInt(matcher.group(1)));
+        Matcher graphMatcher = Pattern.compile("F([x\\W0-9]+)C(\\d+)P(\\d+)D(\\d+)O(\\d+\\.\\d+)R(true|false)S(\\d+)").matcher(matcher.group(2));
+
+        Iterator<Graph> it = graphs.values().iterator();
+        while(graphMatcher.find()) {
+            Graph graph = it.next();
+            graph.setFunction(graphMatcher.group(1));
+            graph.setCooldownSpeed(Integer.parseInt(graphMatcher.group(2)));
+            graph.setChangeProbability(Integer.parseInt(graphMatcher.group(3)));
+            graph.setSubdecimals(Integer.parseInt(graphMatcher.group(4)));
+            graph.setMaxOffset(Double.parseDouble(graphMatcher.group(5)));
+            graph.setRelativeToLast(Boolean.parseBoolean(graphMatcher.group(6)));
+            graph.setSize(Integer.parseInt(graphMatcher.group(7)));
+        }
     }
 
     /**
@@ -39,7 +57,7 @@ public class Generator {
         settings.append("G" + graphs.size());
         graphs.values().forEach(graph ->
                 settings.append("F" + graph.getFunction())
-                        .append("C" + graph.getChangeCooldown())
+                        .append("C" + graph.getCooldownSpeed())
                         .append("P" + graph.getChangeProbability())
                         .append("D" + graph.getSubdecimals())
                         .append("O" + graph.getMaxOffset())
