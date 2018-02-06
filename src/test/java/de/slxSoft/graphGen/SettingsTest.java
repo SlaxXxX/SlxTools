@@ -9,16 +9,29 @@ public class SettingsTest {
     private SettingsTest() {
         Generator gen1 = new Generator();
 
-        Graph[] grap1 = gen1.addGraphs(3);
+//        Graph[] grap1 = gen1.addGraphs(3);
+//
+//        grap1[1].setSize(5);
+//        grap1[1].setFunction("100+x");
+//        grap1[1].setRelativeToLast(false);
+//        grap1[1].setMaxOffset(0.8);
+//        grap1[2].setSize(3);
+//        grap1[2].setSubdecimals(3);
+//        grap1[2].setChangeProbability(3);
+//        grap1[2].setCooldownSpeed(50);
 
-        grap1[1].setSize(5);
-        grap1[1].setFunction("100+x");
-        grap1[1].setRelativeToLast(false);
-        grap1[1].setMaxOffset(0.8);
-        grap1[2].setSize(3);
-        grap1[2].setSubdecimals(3);
-        grap1[2].setChangeProbability(3);
-        grap1[2].setCooldownSpeed(50);
+        gen1.addGraph();
+        Graph grap1 = gen1.addGraph();
+        Graph grap2 = gen1.addGraph();
+
+        grap1.setSize(5);
+        grap1.setFunction("100+x");
+        grap1.setRelativeToLast(false);
+        grap1.setMaxOffset(0.8);
+        grap2.setSize(3);
+        grap2.setSubdecimals(3);
+        grap2.setChangeProbability(3);
+        grap2.setCooldownSpeed(50);
 
         Generator gen2 = new Generator(gen1.getSettings());
 

@@ -55,14 +55,18 @@ public class Generator {
     public String getSettings() {
         StringBuilder settings = new StringBuilder();
         settings.append("G" + graphs.size());
-        graphs.values().forEach(graph ->
-                settings.append("F" + graph.getFunction())
-                        .append("C" + graph.getCooldownSpeed())
-                        .append("P" + graph.getChangeProbability())
-                        .append("D" + graph.getSubdecimals())
-                        .append("O" + graph.getMaxOffset())
-                        .append("R" + graph.getRelativeToLast())
-                        .append("S" + graph.getSize()));
+        Iterator<Graph> it = graphs.values().iterator();
+        while(it.hasNext()) {
+            Graph graph = it.next();
+            settings.append("F" + graph.getFunction())
+                    .append("C" + graph.getCooldownSpeed())
+                    .append("P" + graph.getChangeProbability())
+                    .append("D" + graph.getSubdecimals())
+                    .append("O" + graph.getMaxOffset())
+                    .append("R" + graph.getRelativeToLast())
+                    .append("S" + graph.getSize());
+        }
+
         settings.append("SEED"+seed);
         return settings.toString();
     }
