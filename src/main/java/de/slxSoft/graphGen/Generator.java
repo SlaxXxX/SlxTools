@@ -81,10 +81,10 @@ public class Generator {
      */
     public Graph[] addGraphs(int i) {
         Graph[] graphs = new Graph[i];
-        for (i += 0; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
             Graph graph = new Graph();
             this.graphs.put(seeder.nextLong(), graph);
-            graphs[i - 1] = graph;
+            graphs[j] = graph;
         }
         return graphs;
     }

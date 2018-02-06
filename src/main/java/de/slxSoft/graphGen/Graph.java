@@ -168,7 +168,7 @@ public class Graph {
     public double[] generate(long seed) {
 
         Random random = new Random(seed);
-        values = new double[size + 1];
+        values = new double[size];
 
         Expression expression = new ExpressionBuilder(function).variable("x").build();
 
@@ -176,7 +176,7 @@ public class Graph {
         int format = 1;
         for (int i = 0; i < subdecimals; i++)
             format *= 10;
-        for (int i = 0; i <= size; i++) {
+        for (int i = 0; i < size; i++) {
             expression.setVariable("x", i);
             values[i] = expression.evaluate();
 

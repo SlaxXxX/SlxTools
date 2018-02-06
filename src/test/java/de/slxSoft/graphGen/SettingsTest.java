@@ -10,6 +10,7 @@ public class SettingsTest {
         Generator gen1 = new Generator();
 
         Graph[] grap1 = gen1.addGraphs(3);
+
         grap1[1].setSize(5);
         grap1[1].setFunction("100+x");
         grap1[1].setRelativeToLast(false);
