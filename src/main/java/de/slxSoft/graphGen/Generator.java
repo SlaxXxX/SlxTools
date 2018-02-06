@@ -1,5 +1,6 @@
 package de.slxSoft.graphGen;
 
+import javax.crypto.spec.DESedeKeySpec;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,22 +29,29 @@ public class Generator {
      * @param settings The settings of the initial Generator
      */
     public Generator(String settings) {
-        Matcher matcher = Pattern.compile("G(\\d+)(.+)SEED(-?\\d+)").matcher(settings);
+        Matcher matcher = Pattern.compile("G(\\d+)(.+)E(-?\\d+)").matcher(settings);
         matcher.matches();
         seed = Long.parseLong(matcher.group(3));
         this.addGraphs(Integer.parseInt(matcher.group(1)));
-        Matcher graphMatcher = Pattern.compile("F([x\\W0-9]+)C(\\d+)P(\\d+)D(\\d+)O(\\d+\\.\\d+)R(true|false)S(\\d+)").matcher(matcher.group(2));
+        Matcher graphMatcher = Pattern.compile("IF?((?:[x\\W0-9]+)?)C?((?:\\d+)?)P?((?:\\d+)?)D?((?:\\d+)?)O?((?:\\d+\\.\\d+)?)R?((?:t|f)?)S?((?:\\d+)?)").matcher(matcher.group(2));
 
         Iterator<Graph> it = graphs.values().iterator();
-        while(graphMatcher.find()) {
+        while (graphMatcher.find()) {
             Graph graph = it.next();
-            graph.setFunction(graphMatcher.group(1));
-            graph.setCooldownSpeed(Integer.parseInt(graphMatcher.group(2)));
-            graph.setChangeProbability(Integer.parseInt(graphMatcher.group(3)));
-            graph.setSubdecimals(Integer.parseInt(graphMatcher.group(4)));
-            graph.setMaxOffset(Double.parseDouble(graphMatcher.group(5)));
-            graph.setRelativeToLast(Boolean.parseBoolean(graphMatcher.group(6)));
-            graph.setSize(Integer.parseInt(graphMatcher.group(7)));
+            if (!graphMatcher.group(1).isEmpty())
+                graph.setFunction(graphMatcher.group(1));
+            if (!graphMatcher.group(2).isEmpty())
+                graph.setCooldownSpeed(Integer.parseInt(graphMatcher.group(2)));
+            if (!graphMatcher.group(3).isEmpty())
+                graph.setChangeProbability(Integer.parseInt(graphMatcher.group(3)));
+            if (!graphMatcher.group(4).isEmpty())
+                graph.setSubdecimals(Integer.parseInt(graphMatcher.group(4)));
+            if (!graphMatcher.group(5).isEmpty())
+                graph.setMaxOffset(Double.parseDouble(graphMatcher.group(5)));
+            if (!graphMatcher.group(6).isEmpty())
+                graph.setRelativeToLast(graphMatcher.group(6).equals("t"));
+            if (!graphMatcher.group(7).isEmpty())
+                graph.setSize(Integer.parseInt(graphMatcher.group(7)));
         }
     }
 
@@ -56,18 +64,19 @@ public class Generator {
         StringBuilder settings = new StringBuilder();
         settings.append("G" + graphs.size());
         Iterator<Graph> it = graphs.values().iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Graph graph = it.next();
-            settings.append("F" + graph.getFunction())
-                    .append("C" + graph.getCooldownSpeed())
-                    .append("P" + graph.getChangeProbability())
-                    .append("D" + graph.getSubdecimals())
-                    .append("O" + graph.getMaxOffset())
-                    .append("R" + graph.getRelativeToLast())
-                    .append("S" + graph.getSize());
+            settings.append("I")
+                    .append(graph.getFunction().equals(Defaults.function) ? "" : "F" + graph.getFunction())
+                    .append(graph.getCooldownSpeed() == Defaults.cooldownSpeed ? "" : "C" + graph.getCooldownSpeed())
+                    .append(graph.getChangeProbability() == Defaults.changeProbability ? "" : "P" + graph.getChangeProbability())
+                    .append(graph.getSubdecimals() == Defaults.subdecimals ? "" : "D" + graph.getSubdecimals())
+                    .append(graph.getMaxOffset() == Defaults.maxOffset ? "" : "O" + graph.getMaxOffset())
+                    .append(graph.getRelativeToLast() == Defaults.relativeToLast ? "" : "R" + (graph.getRelativeToLast() ? "t" : "f"))
+                    .append(graph.getSize() == Defaults.size ? "" : "S" + graph.getSize());
         }
 
-        settings.append("SEED"+seed);
+        settings.append("E" + seed);
         return settings.toString();
     }
 

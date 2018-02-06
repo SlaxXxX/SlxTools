@@ -10,17 +10,26 @@ import java.util.Random;
  */
 public class Graph {
 
-    private boolean relativeToLast = true;
-    private double maxOffset = 0.4;
-    private int changeProbability = 0;
-    private int size = 100;
-    private int changeCooldown = 1;
-    private int cooldownSpeed = 20;
-    private int subdecimals = 0;
-
-
-    private String function = "50+3.5*x";
+    private boolean relativeToLast;
+    private double maxOffset;
+    private int changeProbability;
+    private int size;
+    private int changeCooldown;
+    private int cooldownSpeed;
+    private int subdecimals;
+    private String function;
     private double[] values;
+
+    public Graph(){
+        relativeToLast = Defaults.relativeToLast;
+        maxOffset = Defaults.maxOffset;
+        changeProbability = Defaults.changeProbability;
+        size = Defaults.size;
+        cooldownSpeed = Defaults.cooldownSpeed;
+        subdecimals = Defaults.subdecimals;
+        function = Defaults.function;
+
+    }
 
     boolean getRelativeToLast() {
         return relativeToLast;

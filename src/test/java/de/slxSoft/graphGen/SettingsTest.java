@@ -33,9 +33,10 @@ public class SettingsTest {
         grap2.setChangeProbability(3);
         grap2.setCooldownSpeed(50);
 
+        System.out.println(gen1.getSettings());
+
         Generator gen2 = new Generator(gen1.getSettings());
 
-        System.out.println(gen1.getSettings());
         System.out.println(gen2.getSettings());
         System.out.println();
         double[][] val1 = gen1.generate();
