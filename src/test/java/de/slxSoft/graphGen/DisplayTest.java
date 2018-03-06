@@ -21,7 +21,8 @@ public class DisplayTest {
             graphs[i].setRelativeToLast(false);
             graphs[i].setChangeProbability(0);
             graphs[i].setFunction("1");
-            graphs[i].setMaxOffset(0.2);
+            graphs[i].setMaxUpperOffset(0.2);
+            graphs[i].setMaxLowerOffset(0.8);
             graphs[i].setCooldownSpeed(1000);
             graphs[i].setSubdecimals(3);
         }

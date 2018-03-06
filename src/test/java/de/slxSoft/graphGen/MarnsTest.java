@@ -15,9 +15,10 @@ public class MarnsTest {
 
         Generator generator = new Generator();
         generator.addGraph();
-        Graph variance = generator.getGraph(1);
+        Graph variance = generator.getGraph(0);
         variance.setFunction("1");
-        variance.setMaxOffset(0.2);
+        variance.setMaxUpperOffset(0.2);
+        variance.setMaxLowerOffset(0.2);
         variance.setSubdecimals(2);
         variance.setCooldownSpeed(99999999);
         

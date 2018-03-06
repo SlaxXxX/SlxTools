@@ -27,7 +27,8 @@ public class SettingsTest {
         grap1.setSize(5);
         grap1.setFunction("100+x");
         grap1.setRelativeToLast(false);
-        grap1.setMaxOffset(0.8);
+        grap1.setMaxUpperOffset(0.8);
+        grap1.setMaxLowerOffset(0.8);
         grap2.setSize(3);
         grap2.setSubdecimals(3);
         grap2.setChangeProbability(3);

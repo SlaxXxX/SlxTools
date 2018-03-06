@@ -33,7 +33,7 @@ public class Generator {
         matcher.matches();
         seed = Long.parseLong(matcher.group(3));
         this.addGraphs(Integer.parseInt(matcher.group(1)));
-        Matcher graphMatcher = Pattern.compile("IF?((?:[x\\W0-9]+)?)C?((?:\\d+)?)P?((?:\\d+)?)D?((?:\\d+)?)O?((?:\\d+\\.\\d+)?)R?((?:t|f)?)S?((?:\\d+)?)").matcher(matcher.group(2));
+        Matcher graphMatcher = Pattern.compile("IF?((?:[x\\W0-9]+)?)C?((?:\\d+)?)P?((?:\\d+)?)D?((?:\\d+)?)U?((?:\\d+\\.\\d+)?)L?((?:\\d+\\.\\d+)?)R?((?:t|f)?)S?((?:\\d+)?)").matcher(matcher.group(2));
 
         Iterator<Graph> it = graphs.values().iterator();
         while (graphMatcher.find()) {
@@ -47,11 +47,13 @@ public class Generator {
             if (!graphMatcher.group(4).isEmpty())
                 graph.setSubdecimals(Integer.parseInt(graphMatcher.group(4)));
             if (!graphMatcher.group(5).isEmpty())
-                graph.setMaxOffset(Double.parseDouble(graphMatcher.group(5)));
+                graph.setMaxUpperOffset(Double.parseDouble(graphMatcher.group(5)));
             if (!graphMatcher.group(6).isEmpty())
-                graph.setRelativeToLast(graphMatcher.group(6).equals("t"));
+                graph.setMaxLowerOffset(Double.parseDouble(graphMatcher.group(6)));
             if (!graphMatcher.group(7).isEmpty())
-                graph.setSize(Integer.parseInt(graphMatcher.group(7)));
+                graph.setRelativeToLast(graphMatcher.group(7).equals("t"));
+            if (!graphMatcher.group(8).isEmpty())
+                graph.setSize(Integer.parseInt(graphMatcher.group(8)));
         }
     }
 
@@ -71,7 +73,8 @@ public class Generator {
                     .append(graph.getCooldownSpeed() == Defaults.cooldownSpeed ? "" : "C" + graph.getCooldownSpeed())
                     .append(graph.getChangeProbability() == Defaults.changeProbability ? "" : "P" + graph.getChangeProbability())
                     .append(graph.getSubdecimals() == Defaults.subdecimals ? "" : "D" + graph.getSubdecimals())
-                    .append(graph.getMaxOffset() == Defaults.maxOffset ? "" : "O" + graph.getMaxOffset())
+                    .append(graph.getMaxUpperOffset() == Defaults.maxUpperOffset ? "" : "U" + graph.getMaxUpperOffset())
+                    .append(graph.getMaxLowerOffset() == Defaults.maxLowerOffset ? "" : "L" + graph.getMaxLowerOffset())
                     .append(graph.getRelativeToLast() == Defaults.relativeToLast ? "" : "R" + (graph.getRelativeToLast() ? "t" : "f"))
                     .append(graph.getSize() == Defaults.size ? "" : "S" + graph.getSize());
         }

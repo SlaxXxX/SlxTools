@@ -11,7 +11,8 @@ import java.util.Random;
 public class Graph {
 
     private boolean relativeToLast;
-    private double maxOffset;
+    private double maxUpperOffset;
+    private double maxLowerOffset;
     private int changeProbability;
     private int size;
     private int changeCooldown;
@@ -20,9 +21,10 @@ public class Graph {
     private String function;
     private double[] values;
 
-    public Graph(){
+    public Graph() {
         relativeToLast = Defaults.relativeToLast;
-        maxOffset = Defaults.maxOffset;
+        maxUpperOffset = Defaults.maxUpperOffset;
+        maxLowerOffset = Defaults.maxLowerOffset;
         changeProbability = Defaults.changeProbability;
         size = Defaults.size;
         cooldownSpeed = Defaults.cooldownSpeed;
@@ -35,8 +37,12 @@ public class Graph {
         return relativeToLast;
     }
 
-    double getMaxOffset() {
-        return maxOffset;
+    double getMaxUpperOffset() {
+        return maxUpperOffset;
+    }
+
+    double getMaxLowerOffset() {
+        return maxLowerOffset;
     }
 
     int getChangeProbability() {
@@ -76,10 +82,20 @@ public class Graph {
      * DEFAULT is 0.4 (40%)<br>
      * <br>
      *
-     * @param offset Maximum offset from the Function in percent
+     * @param offset Maximum upper offset from the Function in percent
      */
-    public void setMaxOffset(double offset) {
-        maxOffset = offset;
+    public void setMaxUpperOffset(double offset) {
+        maxUpperOffset = offset;
+    }
+
+    /**
+     * DEFAULT is 0.4 (40%)<br>
+     * <br>
+     *
+     * @param offset Maximum lower offset from the Function in percent
+     */
+    public void setMaxLowerOffset(double offset) {
+        maxLowerOffset = offset;
     }
 
     /**
@@ -198,12 +214,14 @@ public class Graph {
 
     private double distort(double lastval, double thisval, double random) {
 
-        double maxDist = (thisval * maxOffset);
+        double distortedRandom = Math.pow(random * 2 - 1, changeProbability * 2 - 1);
+
+        double maxDist = (thisval * (distortedRandom > 0 ? maxUpperOffset : maxLowerOffset));
 
         double distortion =
                 Math.min(
                         Math.max(
-                                Math.pow(random * 2 - 1, changeProbability * 2 - 1),
+                                distortedRandom,
                                 -1 - (lastval - thisval) / maxDist),
                         1 - (lastval - thisval) / maxDist);
 
