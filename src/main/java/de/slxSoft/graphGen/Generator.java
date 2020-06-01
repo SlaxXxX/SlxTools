@@ -58,6 +58,13 @@ public class Generator {
     }
 
     /**
+     * @return The seed of this Generator
+     */
+    public String getSeed() {
+        return "" + seed;
+    }
+
+    /**
      * Returns the Generators seed and all the graphs settings<br>
      *
      * @return The seed
