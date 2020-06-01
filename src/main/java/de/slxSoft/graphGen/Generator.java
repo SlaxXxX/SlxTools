@@ -24,14 +24,49 @@ public class Generator {
     }
 
     /**
-     * Uses the seed to create an exact copy<br><br>
+     * Uses the settings to create a generator with a different seed but same graphs<br><br>
      *
      * @param settings The settings of the initial Generator
      */
     public Generator(String settings) {
-        Matcher matcher = Pattern.compile("G(\\d+)(.+)E(-?\\d+)").matcher(settings);
+        Matcher matcher = Pattern.compile("G(\\d+)(.+)").matcher(settings);
         matcher.matches();
-        seed = Long.parseLong(matcher.group(3));
+        seed = new Random().nextLong();
+        this.addGraphs(Integer.parseInt(matcher.group(1)));
+        Matcher graphMatcher = Pattern.compile("IF?((?:[x\\W0-9]+)?)C?((?:\\d+)?)P?((?:\\d+)?)D?((?:\\d+)?)U?((?:\\d+\\.\\d+)?)L?((?:\\d+\\.\\d+)?)R?((?:t|f)?)S?((?:\\d+)?)").matcher(matcher.group(2));
+
+        Iterator<Graph> it = graphs.values().iterator();
+        while (graphMatcher.find()) {
+            Graph graph = it.next();
+            if (!graphMatcher.group(1).isEmpty())
+                graph.setFunction(graphMatcher.group(1));
+            if (!graphMatcher.group(2).isEmpty())
+                graph.setCooldownSpeed(Integer.parseInt(graphMatcher.group(2)));
+            if (!graphMatcher.group(3).isEmpty())
+                graph.setChangeProbability(Integer.parseInt(graphMatcher.group(3)));
+            if (!graphMatcher.group(4).isEmpty())
+                graph.setSubdecimals(Integer.parseInt(graphMatcher.group(4)));
+            if (!graphMatcher.group(5).isEmpty())
+                graph.setMaxUpperOffset(Double.parseDouble(graphMatcher.group(5)));
+            if (!graphMatcher.group(6).isEmpty())
+                graph.setMaxLowerOffset(Double.parseDouble(graphMatcher.group(6)));
+            if (!graphMatcher.group(7).isEmpty())
+                graph.setRelativeToLast(graphMatcher.group(7).equals("t"));
+            if (!graphMatcher.group(8).isEmpty())
+                graph.setSize(Integer.parseInt(graphMatcher.group(8)));
+        }
+    }
+
+    /**
+     * Uses the settings and the seed to create an exact copy<br><br>
+     *
+     * @param settings The settings of the initial Generator
+     * @param seed The seed to generate values with
+     */
+    public Generator(String settings, long seed) {
+        Matcher matcher = Pattern.compile("G(\\d+)(.+)").matcher(settings);
+        matcher.matches();
+        this.seed = seed;
         this.addGraphs(Integer.parseInt(matcher.group(1)));
         Matcher graphMatcher = Pattern.compile("IF?((?:[x\\W0-9]+)?)C?((?:\\d+)?)P?((?:\\d+)?)D?((?:\\d+)?)U?((?:\\d+\\.\\d+)?)L?((?:\\d+\\.\\d+)?)R?((?:t|f)?)S?((?:\\d+)?)").matcher(matcher.group(2));
 
@@ -60,8 +95,8 @@ public class Generator {
     /**
      * @return The seed of this Generator
      */
-    public String getSeed() {
-        return "" + seed;
+    public long getSeed() {
+        return seed;
     }
 
     /**
@@ -85,8 +120,6 @@ public class Generator {
                     .append(graph.getRelativeToLast() == Defaults.relativeToLast ? "" : "R" + (graph.getRelativeToLast() ? "t" : "f"))
                     .append(graph.getSize() == Defaults.size ? "" : "S" + graph.getSize());
         }
-
-        settings.append("E" + seed);
         return settings.toString();
     }
 

@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecec8077-d894-48c0-80e8-0ef3a2e87ab6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/slxSoft/graphGen/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/slxSoft/graphGen/Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/slxSoft/graphGen/Generator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/slxSoft/graphGen/Generator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/slxSoft/graphGen/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/slxSoft/graphGen/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/de/slxSoft/graphGen/DisplayTest$Draw.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/de/slxSoft/graphGen/DisplayTest$Draw.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/de/slxSoft/graphGen/DisplayTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/de/slxSoft/graphGen/DisplayTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,22 +331,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="1.2.2: Replaced forEach with Iterator in getSettings" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="2517" height="353" key="GridCell.Tab.0.bottom" timestamp="1591029368714">
+    <state width="2517" height="353" key="GridCell.Tab.0.bottom" timestamp="1591030729727">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="353" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591029368714" />
-    <state width="2517" height="353" key="GridCell.Tab.0.center" timestamp="1591029368714">
+    <state width="2517" height="353" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591030729727" />
+    <state width="2517" height="353" key="GridCell.Tab.0.center" timestamp="1591030729727">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="353" key="GridCell.Tab.0.center/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591029368714" />
-    <state width="2517" height="353" key="GridCell.Tab.0.left" timestamp="1591029368714">
+    <state width="2517" height="353" key="GridCell.Tab.0.center/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591030729727" />
+    <state width="2517" height="353" key="GridCell.Tab.0.left" timestamp="1591030729727">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="353" key="GridCell.Tab.0.left/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591029368714" />
-    <state width="2517" height="353" key="GridCell.Tab.0.right" timestamp="1591029368714">
+    <state width="2517" height="353" key="GridCell.Tab.0.left/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591030729727" />
+    <state width="2517" height="353" key="GridCell.Tab.0.right" timestamp="1591030729727">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="353" key="GridCell.Tab.0.right/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591029368714" />
+    <state width="2517" height="353" key="GridCell.Tab.0.right/0.0.2560.1400/2560.439.1920.1040@0.0.2560.1400" timestamp="1591030729727" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
