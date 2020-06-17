@@ -13,7 +13,7 @@ public class Graph {
     private boolean relativeToLast;
     private double maxUpperOffset;
     private double maxLowerOffset;
-    private int changeProbability;
+    private double changeProbability;
     private int size;
     private int changeCooldown;
     private int cooldownSpeed;
@@ -45,7 +45,7 @@ public class Graph {
         return maxLowerOffset;
     }
 
-    int getChangeProbability() {
+    double getChangeProbability() {
         return changeProbability;
     }
 
@@ -142,7 +142,7 @@ public class Graph {
      *                    the higher the value, the lower the chance will get, that you get a high distortion<br>
      *                    (but 0 seems to be the best..)
      */
-    public void setChangeProbability(int probability) {
+    public void setChangeProbability(double probability) {
         changeProbability = probability;
     }
 
