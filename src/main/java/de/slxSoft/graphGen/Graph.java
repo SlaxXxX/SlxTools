@@ -214,7 +214,7 @@ public class Graph {
 
     private double distort(double lastval, double thisval, double random) {
 
-        double distortedRandom = Math.pow(random * 2 - 1, changeProbability * 2 - 1);
+        double distortedRandom = Math.pow(random * 2 - 1, changeProbability);
 
         double maxDist = (thisval * (distortedRandom > 0 ? maxUpperOffset : maxLowerOffset));
 
